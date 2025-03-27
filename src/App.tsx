@@ -19,24 +19,24 @@ import { Dumbbell } from 'lucide-react';
 
 // Imagenes
 import portal from '../public/portal.jpeg';
-import yoSports from '../assets/yo-sports.jpg';
-// import yo1 from '../assets/yo-1.jpg';
-// import yo2 from '../assets/yo-2.jpg';
-// import yo3 from '../assets/yo-3.jpg';
+import yoSports from './assets/yo-sports.jpg';
+// import yo1 from './assets/yo-1.jpg';
+// import yo2 from './assets/yo-2.jpg';
+// import yo3 from './assets/yo-3.jpg';
 
 // Audio
-import song from '../assets/song.mp3';
+import song from './assets/song.mp3';
 
 // Imagenes de la seccion de proyectos
-import horariosCap1 from '../assets/horarios-cap1.jpg';
-import webAnimCap1 from '../assets/web-anim-cap1.png';
-import picCap1 from '../assets/pic-cap1.jpg';
+import horariosCap1 from '../public/horarios-cap1.jpg';
+import webAnimCap1 from '../public/web-anim-cap1.png';
+import picCap1 from '../public/pic-cap1.jpg';
 
 // Imagenes de la seccion extra
 
 
 // Icono de la seccion de experiencia
-import workIcon from '../assets/work.svg';
+import workIcon from './assets/work.svg';
 
 
 function App() {
