@@ -1,5 +1,4 @@
 // Logos
-import React from 'react'
 import reactLogo from '/src/assets/react.svg'
 import viteLogo from '/vite.svg'
 

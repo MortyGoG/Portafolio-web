@@ -1,5 +1,5 @@
 import './App.css'
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 // Importando componentes
 import NavBar from './components/NavBar'
@@ -9,7 +9,7 @@ import Footer from './components/Footer'
 import { Code } from "lucide-react";
 import { Github } from 'lucide-react';
 import { Linkedin } from 'lucide-react';
-import { Instagram } from 'lucide-react';
+// import { Instagram } from 'lucide-react';
 import { UserPen } from 'lucide-react';
 import { SquareChevronRight } from 'lucide-react';
 import { Link } from 'lucide-react';
@@ -47,29 +47,34 @@ function App() {
     };
   }, []);
 
-  const [activeIndex, setActiveIndex] = useState(0); // Índice de la imagen activa
-  const images = [
-    'src/assets/yo-1.jpg',
-    'src/assets/yo-sports.jpg',
-    'src/assets/yo-2.jpg',
-    'src/assets/yo-3.jpg',
-  ];
+  // const [activeIndex, setActiveIndex] = useState(0); // Índice de la imagen activa
+  // const images = [
+  //   'src/assets/yo-1.jpg',
+  //   'src/assets/yo-sports.jpg',
+  //   'src/assets/yo-2.jpg',
+  //   'src/assets/yo-3.jpg',
+  // ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 7000); // Cambia cada 3 segundos
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
+  //   }, 7000); // Cambia cada 3 segundos
 
-    return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
-  }, [images.length]);
+  //   return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
+  // }, [images.length]);
 
-  const handleNext = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
+  // const handleNext = () => {
+  //   setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
+  // };
 
-  const handlePrev = () => {
-    setActiveIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
+  // const handlePrev = () => {
+  //   setActiveIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+  // };
+
+  // // Example usage of handlePrev
+  // useEffect(() => {
+  //   handlePrev(); // Call the function to demonstrate usage
+  // }, []);
 
   return (
 
