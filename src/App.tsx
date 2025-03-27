@@ -93,7 +93,7 @@ function App() {
             <div className="flex items-center gap-4 mb-4">
               <div className="rounded-full ">
                 <img
-                  src="/src/assets/portal.jpeg"
+                  src="./src/assets/portal.jpeg"
                   className="w-30 rounded-full shadow-xl shadow-[#A6FF00]/30 mr-5"
                 />
               </div>
@@ -151,7 +151,7 @@ function App() {
         section w-full mx-auto container">
             <span className="inline-block align-middle pr-4">
               <img
-                src="/src/assets/work.svg"
+                src="./src/assets/work.svg"
                 alt="Work Icon"
                 className="w-10 h-10 pb-2"
               />
