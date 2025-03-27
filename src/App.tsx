@@ -93,7 +93,7 @@ function App() {
             <div className="flex items-center gap-4 mb-4">
               <div className="rounded-full ">
                 <img
-                  src="./src/assets/portal.jpeg"
+                  src={`${import.meta.env.BASE_URL}src/assets/portal.jpeg`}
                   className="w-30 rounded-full shadow-xl shadow-[#A6FF00]/30 mr-5"
                 />
               </div>
@@ -151,7 +151,7 @@ function App() {
         section w-full mx-auto container">
             <span className="inline-block align-middle pr-4">
               <img
-                src="./src/assets/work.svg"
+                src={`${import.meta.env.BASE_URL}src/assets/work.svg`}
                 alt="Work Icon"
                 className="w-10 h-10 pb-2"
               />
@@ -217,7 +217,7 @@ function App() {
             <div className="container px-6 py-10 mx-auto">
 
               <div className=" lg:flex lg:items-center">
-                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src="src/assets/horarios-cap1.jpg" alt="" />
+                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src={`${import.meta.env.BASE_URL}src/assets/horarios-cap1.jpg`} alt="" />
 
                 <div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6">
 
@@ -252,7 +252,7 @@ function App() {
             <div className="container px-6 py-10 mx-auto">
 
               <div className="lg:flex lg:items-center">
-                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src="src/assets/web-anim-cap1.png" alt="" />
+                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src={`${import.meta.env.BASE_URL}src/assets/web-anim-cap1.png`} alt="" />
 
                 <div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6">
 
@@ -301,7 +301,7 @@ function App() {
             <div className="container px-6 py-10 mx-auto">
 
               <div className="lg:flex lg:items-center">
-                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src="src/assets/pic-cap1.jpg" alt="" />
+                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src={`${import.meta.env.BASE_URL}src/assets/pic-cap1.jpg`} alt="" />
 
                 <div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6">
 
@@ -366,7 +366,7 @@ function App() {
               working on a website using Angular and Ionic, connected to endpoints. Additionally, I have completed various projects in
               different programming languages and libraries.
               See my GitHub for more details.
-            </p> </div> <img width="200" height="200" src="src/assets/yo-sports.jpg" alt="Marvin Lopez S" className="order-1 object-cover w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-64 aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20 " /> </article>
+            </p> </div> <img width="200" height="200" src={`${import.meta.env.BASE_URL}src/assets/yo-sports.jpg`} alt="Marvin Lopez S" className="order-1 object-cover w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-64 aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20 " /> </article>
         </section>
 
 
@@ -509,8 +509,8 @@ function App() {
           </div>
         </section>
 
-        {/* Reproductor de audio oculto
-        <audio ref={audioRef} src="src/assets/song.mp3" loop /> */}
+        {/* Reproductor de audio oculto */}
+        <audio ref={audioRef} src={`${import.meta.env.BASE_URL}src/assets/song.mp3`} loop />
 
         <Footer />
 
