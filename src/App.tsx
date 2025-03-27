@@ -20,8 +20,6 @@ import { Dumbbell } from 'lucide-react';
 // Imagenes
 import portal from '../public/portal.jpeg';
 
-import portal2 from 'src/assets/portal.jpeg';
-
 
 function App() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -103,10 +101,6 @@ function App() {
                 />
                 <img
                   src={portal}
-                  className="w-30 rounded-full shadow-xl shadow-[#A6FF00]/30 mr-5"
-                />
-                <img
-                  src={portal2}
                   className="w-30 rounded-full shadow-xl shadow-[#A6FF00]/30 mr-5"
                 />
               </div>
