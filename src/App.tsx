@@ -19,6 +19,24 @@ import { Dumbbell } from 'lucide-react';
 
 // Imagenes
 import portal from '../public/portal.jpeg';
+import yoSports from '../assets/yo-sports.jpg';
+// import yo1 from '../assets/yo-1.jpg';
+// import yo2 from '../assets/yo-2.jpg';
+// import yo3 from '../assets/yo-3.jpg';
+
+// Audio
+import song from '../assets/song.mp3';
+
+// Imagenes de la seccion de proyectos
+import horariosCap1 from '../assets/horarios-cap1.jpg';
+import webAnimCap1 from '../assets/web-anim-cap1.png';
+import picCap1 from '../assets/pic-cap1.jpg';
+
+// Imagenes de la seccion extra
+
+
+// Icono de la seccion de experiencia
+import workIcon from '../assets/work.svg';
 
 
 function App() {
@@ -96,10 +114,6 @@ function App() {
             <div className="flex items-center gap-4 mb-4">
               <div className="rounded-full ">
                 <img
-                  src="src/public/portal.jpeg"
-                  className="w-30 rounded-full shadow-xl shadow-[#A6FF00]/30 mr-5"
-                />
-                <img
                   src={portal}
                   className="w-30 rounded-full shadow-xl shadow-[#A6FF00]/30 mr-5"
                 />
@@ -158,7 +172,7 @@ function App() {
         section w-full mx-auto container">
             <span className="inline-block align-middle pr-4">
               <img
-                src={`${import.meta.env.BASE_URL}src/assets/work.svg`}
+                src={workIcon}
                 alt="Work Icon"
                 className="w-10 h-10 pb-2"
               />
@@ -224,7 +238,7 @@ function App() {
             <div className="container px-6 py-10 mx-auto">
 
               <div className=" lg:flex lg:items-center">
-                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src={`${import.meta.env.BASE_URL}src/assets/horarios-cap1.jpg`} alt="" />
+                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src={horariosCap1} alt="" />
 
                 <div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6">
 
@@ -259,7 +273,7 @@ function App() {
             <div className="container px-6 py-10 mx-auto">
 
               <div className="lg:flex lg:items-center">
-                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src={`${import.meta.env.BASE_URL}src/assets/web-anim-cap1.png`} alt="" />
+                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src={webAnimCap1} alt="" />
 
                 <div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6">
 
@@ -308,7 +322,7 @@ function App() {
             <div className="container px-6 py-10 mx-auto">
 
               <div className="lg:flex lg:items-center">
-                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src={`${import.meta.env.BASE_URL}src/assets/pic-cap1.jpg`} alt="" />
+                <img className="md:w-200 lg:w-110 mx-auto rounded-xl shadow-xl mr-5 hover:scale-105" src={picCap1} alt="" />
 
                 <div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6">
 
@@ -373,7 +387,7 @@ function App() {
               working on a website using Angular and Ionic, connected to endpoints. Additionally, I have completed various projects in
               different programming languages and libraries.
               See my GitHub for more details.
-            </p> </div> <img width="200" height="200" src={`${import.meta.env.BASE_URL}src/assets/yo-sports.jpg`} alt="Marvin Lopez S" className="order-1 object-cover w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-64 aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20 " /> </article>
+            </p> </div> <img width="200" height="200" src={yoSports} alt="Marvin Lopez S" className="order-1 object-cover w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-64 aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20 " /> </article>
         </section>
 
 
@@ -517,7 +531,7 @@ function App() {
         </section>
 
         {/* Reproductor de audio oculto */}
-        <audio ref={audioRef} src={`${import.meta.env.BASE_URL}src/assets/song.mp3`} loop />
+        <audio ref={audioRef} src={song} loop />
 
         <Footer />
 
