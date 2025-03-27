@@ -93,7 +93,7 @@ function App() {
             <div className="flex items-center gap-4 mb-4">
               <div className="rounded-full ">
                 <img
-                  src={`${import.meta.env.BASE_URL}src/assets/portal.jpeg`}
+                  src="src/public/portal.jpeg"
                   className="w-30 rounded-full shadow-xl shadow-[#A6FF00]/30 mr-5"
                 />
               </div>
