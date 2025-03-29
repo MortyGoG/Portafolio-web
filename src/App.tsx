@@ -38,6 +38,11 @@ import webAnimCap1 from '../public/web-anim-cap1.png';
 import picCap1 from '../public/pic-cap1.jpg';
 
 // Imagenes de la seccion extra
+import soon from './assets/soon.jpg';
+import yo1 from './assets/yo-1.jpg';
+import yo2 from './assets/yo-2.jpg';
+import yo3 from './assets/yo-3.jpg';
+
 
 
 // Icono de la seccion de experiencia
@@ -160,11 +165,13 @@ function App() {
   // Carrusel de imagenes
   const [activeIndex, setActiveIndex] = useState(0); // Índice de la imagen activa
   const images = [
-    'src/assets/yo-1.jpg',
-    'src/assets/yo-2.jpg',
-    'src/assets/yo-3.jpg',
-    // 'src/assets/yo-sports.jpg',
-    'src/assets/soon.jpg',
+    soon,
+    yo1,
+    yo2,
+    yo3,
+    // 'src/assets/yo-3.jpg',
+    // // 'src/assets/yo-sports.jpg',
+    // 'src/assets/soon.jpg',
   ];
 
   useEffect(() => {
