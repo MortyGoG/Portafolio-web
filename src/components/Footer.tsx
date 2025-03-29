@@ -8,7 +8,7 @@ function Footer() {
 
     return (
         // Padding Sueprior e Inferior
-        <div className=" py-10">
+        <div className=" pt-15 pb-5">
             <div className="flex justify-center items-center">
                 <a className="p-1" href="https://vite.dev" target="_blank" >
                     <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -22,11 +22,11 @@ function Footer() {
             <h1 className="text-white flex justify-center items-center pt-4" >Developed with: Vite + React</h1>
 
             <div className="text-[#B6C2CE] space-x-6 text-center pt-4">
-                <a href="https://github.com" className="hover:text-pink-300">GitHub</a>
-                <a href="https://linkedin.com" className="hover:text-pink-300">LinkedIn</a>
-                <a href="https://ig.com" className="hover:text-pink-300">Instagram</a>
+                <a href="https://github.com/MortyGoG" className="hover:text-pink-300">GitHub</a>
+                <a href="https://www.linkedin.com/in/marvin-lopez-santiago-27b172295/" className="hover:text-pink-300">LinkedIn</a>
+                <a href="https://www.instagram.com/mortyg_g/" className="hover:text-pink-300">Instagram</a>
             </div>
-            <p className="text-[#B6C2CE] mt-4 text-sm text-center">&copy; 2025 Marvin López. Todos los derechos reservados.</p>
+            <p className="text-[#B6C2CE] mt-2 text-sm text-center">&copy; 2025 Marvin López. All rights reserved.</p>
         </div>
 
     )

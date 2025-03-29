@@ -1,5 +1,6 @@
 import './App.css'
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 // Importando componentes
 import NavBar from './components/NavBar'
@@ -17,9 +18,13 @@ import { Contact } from 'lucide-react';
 import { Send } from 'lucide-react';
 import { Dumbbell } from 'lucide-react';
 
+import { Volume2 } from 'lucide-react';
+import { VolumeX } from 'lucide-react';
+
+
 // Imagenes
 import portal from '../public/portal.jpeg';
-import yoSports from './assets/yo-sports.jpg';
+import yoSports from '../public/yo-sports.jpg';
 // import yo1 from './assets/yo-1.jpg';
 // import yo2 from './assets/yo-2.jpg';
 // import yo3 from './assets/yo-3.jpg';
@@ -40,21 +45,95 @@ import workIcon from './assets/work.svg';
 
 
 function App() {
+  // Modal 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+
+  // Configuración de EmailJS
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!formRef.current) return;
+
+    const formData = new FormData(formRef.current);
+    const userName = formData.get('first_name') as string; // Nombre del remitente
+    const userLastName = formData.get('last_name') as string; // Apellido del remitente
+    const userEmail = formData.get('email') as string; // Correo del remitente
+    const userMessage = formData.get('message') as string; // Mensaje del remitente
+    //console.log(userName, userEmail, userMessage);
+
+    // Enviar el correo a ti mismo
+    emailjs
+      .send(
+        'service_bssrv8j', // Service ID
+        'template_xc9vhmd', // Template ID
+        {
+          name: userName,
+          lastname: userLastName,
+          email: userEmail,
+          message: userMessage,
+        },
+        'lnsukkoYFMWKBlGM0' // Public Key
+      )
+      .then(
+        (result) => {
+          console.log('Correo enviado a ti mismo:', result.text);
+
+          // Ahora, enviar correo de confirmación al remitente
+          emailjs
+            .send(
+              'service_bssrv8j', // Service ID
+              'template_8k5tcxr', // Template ID para el remitente
+              {
+                email: userEmail, // Correo del remitente
+                name: userName, // Nombre del remitente
+              },
+              'lnsukkoYFMWKBlGM0' // Public Key
+            )
+            .then(
+              (result) => {
+                console.log('Correo enviado al remitente:', result.text);
+
+                setIsModalOpen(true); // Mostrar modal de éxito
+                // Limpiar los campos del formulario
+                formRef.current?.reset();
+              },
+              (error) => {
+                console.error('Error al enviar el correo al remitente:', error.text);
+                setIsErrorModalOpen(true);
+              }
+            );
+        },
+        (error) => {
+          console.error('Error al enviar el correo a ti mismo:', error.text);
+          setIsErrorModalOpen(true);
+        }
+      );
+  };
+
+
+
+  // Configuracion Sonido
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const extraSectionRef = useRef<HTMLDivElement | null>(null);
+  const [isMuted, setIsMuted] = useState(true);   // Bug solucionado de permisos
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           // Reproducir música cuando la sección "extra" esté visible
-          audioRef.current?.play();
+          if (!isMuted) {
+            audioRef.current?.play();
+          }
         } else {
           // Pausar música cuando la sección "extra" no esté visible
           audioRef.current?.pause();
         }
       },
-      { threshold: 0.5 } // Detecta cuando el 50% de la sección está visible
+      { threshold: 0.2 } // Detecta cuando el 50% de la sección está visible
     );
 
     if (extraSectionRef.current) {
@@ -66,36 +145,48 @@ function App() {
         observer.unobserve(extraSectionRef.current);
       }
     };
+  }, [isMuted]);
+
+  const toggleMute = () => {
+    setIsMuted((prev) => !prev);
+    if (isMuted) {
+      audioRef.current?.play();
+    } else {
+      audioRef.current?.pause();
+    }
+  };
+
+
+  // Carrusel de imagenes
+  const [activeIndex, setActiveIndex] = useState(0); // Índice de la imagen activa
+  const images = [
+    'src/assets/yo-1.jpg',
+    'src/assets/yo-2.jpg',
+    'src/assets/yo-3.jpg',
+    // 'src/assets/yo-sports.jpg',
+    'src/assets/soon.jpg',
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 4000); // Cambia cada 3 segundos
+
+    return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
+  }, [images.length]);
+
+  const handleNext = () => {
+    setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const handlePrev = () => {
+    setActiveIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+  };
+
+  // Example usage of handlePrev
+  useEffect(() => {
+    handlePrev(); // Call the function to demonstrate usage
   }, []);
-
-  // const [activeIndex, setActiveIndex] = useState(0); // Índice de la imagen activa
-  // const images = [
-  //   'src/assets/yo-1.jpg',
-  //   'src/assets/yo-sports.jpg',
-  //   'src/assets/yo-2.jpg',
-  //   'src/assets/yo-3.jpg',
-  // ];
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
-  //   }, 7000); // Cambia cada 3 segundos
-
-  //   return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
-  // }, [images.length]);
-
-  // const handleNext = () => {
-  //   setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
-  // };
-
-  // const handlePrev = () => {
-  //   setActiveIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  // };
-
-  // // Example usage of handlePrev
-  // useEffect(() => {
-  //   handlePrev(); // Call the function to demonstrate usage
-  // }, []);
 
   return (
 
@@ -105,6 +196,12 @@ function App() {
 
       <header className="fixed top-0 left-0 w-full fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2">
         <NavBar />
+        <button
+          onClick={toggleMute}
+          className="absolute right-4 text-white p-2 rounded-full hover:bg-gray-800 transition"
+        >
+          {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+        </button>
       </header>
 
       <main className="px-4 container mx-auto">
@@ -127,7 +224,7 @@ function App() {
                 hover:bg- hover:scale-105 
                 transform duration-500 ease-in-out 
                 px-4">
-                Disponible para trabajar
+                Available for work
               </a>
             </div>
             <div className="text-left">
@@ -373,13 +470,13 @@ function App() {
 
         </section>
 
-        <section id="about" className="py-20 sm:spy-16 w-full scroll-m-0 mx-auto container lg:max-w-4xl md:max-w-2xl">
+        <section id="about" className="py-25 sm:spy-16 w-full scroll-m-0 mx-auto container lg:max-w-4xl md:max-w-2xl">
           <h2 className="items-center text-white font-bold text-3xl justify-center 
         section w-full mx-auto container">
             <UserPen className="w-10 h-10 inline-block align-middle mb-2 mr-4" /> About Me
           </h2>
 
-          <article className="flex flex-col items-center justify-center gap-8 text-gray-700 dark:text-gray-300 md:flex-row"> <div className="[&amp;>p]:mb-4 [&amp;>p>strong]:text-yellow-500 dark:[&amp;>p>strong]:text-yellow-100 [&amp;>p>strong]:font-normal [&amp;>p>strong]:font-mono text-pretty order-2 md:order-1">
+          <article className="mt-20 flex flex-col items-center justify-center gap-8 text-gray-700 dark:text-gray-300 md:flex-row"> <div className="[&amp;>p]:mb-4 [&amp;>p>strong]:text-yellow-500 dark:[&amp;>p>strong]:text-yellow-100 [&amp;>p>strong]:font-normal [&amp;>p>strong]:font-mono text-pretty order-2 md:order-1">
             <p className="text-justify">
               Hola! Soy <strong>Marvin López Santiago</strong>,
               Full Stack software developer specializing in Java (Spring Boot) and PostgreSQL for backend, and Angular, Ionic, React, and
@@ -397,18 +494,18 @@ function App() {
             <Contact className="w-10 h-10 inline-block align-middle mb-2 mr-4" /> Contact
           </h2>
 
-          <form className="mt-10">
+          <form ref={formRef} onSubmit={sendEmail} className="mt-10">
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <div className="">
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>
-                <input type="text" id="first_name" className="block p-2.5 w-full text-sm 
+                <input type="text" id="first_name" name="first_name" className="block p-2.5 w-full text-sm 
             text-white rounded-lg
             border bg-gray-800 border-gray-600
              focus:ring-blue-500 focus:border-blue-500" placeholder="Marvin" required />
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>
-                <input type="text" id="last_name" className="block p-2.5 w-full text-sm 
+                <input type="text" id="last_name" name="last_name" className="block p-2.5 w-full text-sm 
             text-white rounded-lg
             border bg-gray-800 border-gray-600
              focus:ring-blue-500 focus:border-blue-500" placeholder="Lopez" required />
@@ -417,14 +514,14 @@ function App() {
 
             <div className="mb-6">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-              <input type="text" id="last_name" className="block p-2.5 w-full text-sm 
+              <input type="text" id="email" name="email" className="block p-2.5 w-full text-sm 
             text-white rounded-lg
             border bg-gray-800 border-gray-600
              focus:ring-blue-500 focus:border-blue-500" placeholder="example@example.com" required />
             </div>
 
             <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your message</label>
-            <textarea id="message" rows={6} className="block p-2.5 w-full text-sm 
+            <textarea id="message" name="message" rows={6} className="block p-2.5 w-full text-sm 
             text-white rounded-lg
             border bg-gray-800 border-gray-600
              focus:ring-blue-500 focus:border-blue-500" placeholder="Your message..."></textarea>
@@ -447,14 +544,18 @@ function App() {
 
         </section>
 
-        <section id="extra" ref={extraSectionRef} className="py-20 sm:spy-16 w-full scroll-m-0 mx-auto container lg:max-w-4xl md:max-w-2xl">
-          <h2 className="items-center text-white font-bold text-3xl justify-center section w-full mx-auto container">
+        {/* <section id="extra" ref={extraSectionRef} className="py-20 sm:spy-16 w-full scroll-m-0 mx-auto container lg:max-w-4xl md:max-w-2xl"> */}
+        {/* <h2 className="items-center text-white font-bold text-3xl justify-center section w-full mx-auto container">
             <Dumbbell className="w-10 h-10 inline-block align-middle mb-2 mr-4" /> Soon...
           </h2>
+          
+        </section>      */}
 
-        </section>
 
-        {/* <section id="extra" ref={extraSectionRef} className="py-20 sm:spy-16 w-full scroll-m-0 mx-auto container lg:max-w-4xl md:max-w-2xl">
+        {/* // Alerta */}
+
+
+        <section id="extra" ref={extraSectionRef} className="pb-10 sm:spy-16 w-full scroll-m-20 mx-auto container lg:max-w-4xl md:max-w-2xl">
           <h2 className="items-center text-white font-bold text-3xl justify-center section w-full mx-auto container">
             <Dumbbell className="w-10 h-10 inline-block align-middle mb-2 mr-4" /> Lifestyle
           </h2>
@@ -469,14 +570,14 @@ function App() {
                 >
                   <img
                     src={src}
-                    className="block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 absolute"
+                    className="block max-w-full max-h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 absolute"
                     alt={`Slide ${index + 1}`}
                   />
                 </div>
               ))}
             </div>
 
-            
+
             <div className="flex justify-center items-center pt-4">
               <button
                 type="button"
@@ -529,6 +630,115 @@ function App() {
             </div>
           </div>
         </section>
+
+
+
+        {isModalOpen && (
+          <div
+            id="success-modal"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto bg-black-100 bg-opacity-50 backdrop-blur-sm"
+          >
+            <div className="relative w-full max-w-md max-h-full mx-auto">
+              <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div className="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                  <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+                    ¡Correo enviado!
+                  </h3>
+                  <button
+                    type="button"
+                    className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    <svg
+                      className="w-3 h-3"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 14 14"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                      />
+                    </svg>
+                    <span className="sr-only">Cerrar</span>
+                  </button>
+                </div>
+                <div className="p-4">
+                  <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    Tu mensaje ha sido enviado exitosamente. Me pondré en contacto contigo pronto.
+                  </p>
+                </div>
+                <div className="flex items-center p-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+                  <button
+                    type="button"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Cerrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modal error */}
+        {isErrorModalOpen && (
+          <div
+            id="error-modal"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto bg-black-100 bg-opacity-50 backdrop-blur-sm"
+          >
+            <div className="relative w-full max-w-md max-h-full mx-auto">
+              <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div className="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                  <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+                    Error al enviar el correo
+                  </h3>
+                  <button
+                    type="button"
+                    className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    onClick={() => setIsErrorModalOpen(false)}
+                  >
+                    <svg
+                      className="w-3 h-3"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 14 14"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                      />
+                    </svg>
+                    <span className="sr-only">Cerrar</span>
+                  </button>
+                </div>
+                <div className="p-4">
+                  <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    Hubo un problema al enviar tu mensaje. Por favor, inténtalo nuevamente más tarde.
+                  </p>
+                </div>
+                <div className="flex items-center p-4 border-t border-gray-200 rounded-b dark:border-gray-600">
+                  <button
+                    type="button"
+                    className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800"
+                    onClick={() => setIsErrorModalOpen(false)}
+                  >
+                    Cerrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Reproductor de audio oculto */}
         <audio ref={audioRef} src={song} loop />
